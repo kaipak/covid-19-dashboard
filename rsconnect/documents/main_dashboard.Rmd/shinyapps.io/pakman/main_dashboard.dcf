@@ -1,0 +1,12 @@
+name: main_dashboard
+title: main_dashboard
+username:
+account: pakman
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 2326722
+bundleId: 3168136
+url: https://pakman.shinyapps.io/main_dashboard/
+when: 1589926494.99223
+asMultiple: FALSE
+asStatic: FALSE

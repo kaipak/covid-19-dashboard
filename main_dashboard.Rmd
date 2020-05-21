@@ -3,8 +3,6 @@ title: "Kai's Covid-19 Dashboard"
 runtime: shiny
 output: html_document
 ---
-
-## Covid-19 Cases
 A look at a few interesting data points related to Covid-19 pandemic. This is data covering all of 2020 up to May 14-17 (14th for Republic of Korea data, 17 for the United States)
 
 
@@ -21,10 +19,6 @@ source('functions.R')
 #define the function
 fun1 <- function(x){ (x - lag(x))/lag(x)}
 ```
-
-
-
-
 
 ```{r, echo=FALSE}
 korea_cases <- read_csv('data/korea_dataset/Time.csv')
@@ -66,9 +60,7 @@ ggplot(data = korea_cases, aes(x = date, y = deathIncrease)) +
        y="New Deaths")
 ```
 
-```{r}
-ggplot(data = korea_cases, aes(x = ))
-```
+
 
 
 ### United States
@@ -95,6 +87,7 @@ ggplot(data = us_cases, aes(x = date, y = deathIncrease)) +
 
 
 
+### US States
 
 ```{r, echo=FALSE}
 inputPanel(
@@ -118,21 +111,29 @@ renderPlot({
               size=2)
 })
 
+renderPlot({
+  ggplot(data = us_state_cases[us_state_cases$state == input$state,], 
+         aes(x = totalTestResultsIncrease, y = positiveIncrease)) +
+    geom_point() +
+    geom_smooth(method="lm")
+})
+
 ```
 
+### How Correlated are New Tests with Case?
 
-### States
+### Korea
 
 ```{r}
- ggplot(us_state_cases[us_state_cases$state == 'CA',], aes(x = date, y = positiveIncrease)) +
-  geom_line()
+ggplot(data = korea_cases, aes(x = testIncrease, y = positiveIncrease)) +
+  geom_point() +
+  geom_smooth(method="lm")
 ```
 
-```{r tabsets, echo=FALSE}
-shinyAppDir(
-  system.file("examples/06_tabsets", package = "shiny"),
-  options = list(
-    width = "100%", height = 550
-  )
-)
+### US
+
+```{r}
+ggplot(data = us_cases, aes(x = totalTestResultsIncrease, y = positiveIncrease)) +
+  geom_point() +
+  geom_smooth(method="lm")
 ```
